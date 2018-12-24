@@ -1,0 +1,24 @@
+/**************************************************************************/
+This packet is included:
+ - all sources files to compile on VMS or *NIX OSes;
+ - xsnow_vax.zip zip archive file included:
+        XSNOW.EXE  executable file for OpenVMS
+        Executable file has been compiled on SimH emulator V3.9
+        Compaq C V6.4-005 on OpenVMS VAX V7.3 (Hobbyist License).
+ - xsnow_alpha.zip zip archive file included:
+        XSNOW.EXE executable file for OpenVMS 
+        Executable files has been compiled on
+        System: EISNER, AlphaServer DS20 500 MHz
+        VSI C V7.4-002 on OpenVMS Alpha V8.4-2L2.
+
+/**************************************************************************/
+To compile XSNOW
+simply run:
+$ @makefile
+
+/**************************************************************************/
+To run
+$ XSNOW :== "$DISK:[DIRECTORY]XSNOW.EXE"
+
+To get help
+$ XSNOW -h

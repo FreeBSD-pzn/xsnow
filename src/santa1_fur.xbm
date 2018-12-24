@@ -1,0 +1,4 @@
+#define santa1_fur_width 8
+#define santa1_fur_height 8
+static char santa1_fur_bits[] = {
+   0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
