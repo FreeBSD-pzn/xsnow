@@ -96,6 +96,9 @@
          from behind windows)
  15NOV94 Unsigned longs changed to longs, as strtoul is troublesome on many
          systems (snowDelay)
+ ------------------------------
+ 20DEC2019 Has been added up to 15 Christam trees at a random places on the
+           screen.
 
 */
 
@@ -180,6 +183,12 @@ int MaxYStep = MAXYSTEP;
 int WhirlFactor = WHIRLFACTOR;
 int MaxWinSnowDepth = INITWINSNOWDEPTH;
 int MaxScrSnowDepth = INITSCRSNOWDEPTH;
+
+/* TannenBaum  has been added 20 dec 2019 */
+#define TANNENBAUM_WIDTH  56
+#define TANNENBAUM_HEIGHT 56
+#define MAX_TANNENBAUM  15
+
 
 Santa Claus;   
 
@@ -268,6 +277,12 @@ char *av[];
     XEvent ev;
     int needCalc;
     int i; 
+    /* TannanBaum has been added 20 dec 2019 */
+    int N, Ni, Nix, Niy;
+    int cnt, x, y;
+    int Pos[MAX_TANNENBAUM];
+    int iPos;
+
 
     
     /*
@@ -398,7 +413,7 @@ char *av[];
 	(void) fprintf(stderr, "%s: cannot connect to X server %s\n", av[0],
 	    display_name ? display_name : "(default)");
 	exit(1);
-    }
+      }
 
     screen = DefaultScreen(display);
     rootWin = RootWindow(display, screen);
@@ -409,6 +424,26 @@ char *av[];
     display_height = DisplayHeight(display, screen);
     center_x = display_width / 2;
     center_y = display_height / 2;
+
+    /* TannenBAUM has been added 20 dec 2019
+     * -------------------------------------
+     * Christmas tree (TannenBaum) is placed
+     * on a bottom 2/3 part of display.
+     * 
+     */
+    Nix = display_width - TANNENBAUM_WIDTH;
+    Niy = 2*display_height/3 - TANNENBAUM_HEIGHT;
+    N = Nix * Niy;
+    cnt =0;
+    while( cnt<MAX_TANNENBAUM )
+       {
+         iPos = rand();
+         if( iPos <= N )
+            {
+              Pos[cnt] = iPos;
+              cnt++;
+            }
+       }
 
     /* No snow at all yet */
     current_snow_height = display_height;
@@ -654,12 +689,14 @@ char *av[];
 
       /* Draw dear Andrews */
       if (!NoTrees ) {
-        DrawTannenbaum(display_width-150, display_height-500);
-        DrawTannenbaum(display_width-100, display_height-200);
-        DrawTannenbaum(100, display_height-200);
-        DrawTannenbaum(50, display_height-150);
-        DrawTannenbaum(center_x, display_height-100);
-        DrawTannenbaum(200,400);
+        /* has been added 20 dec 2019 */
+        for( cnt=0; cnt<MAX_TANNENBAUM; cnt++ )
+           {
+             y = Pos[cnt]/Nix;
+             x = Pos[cnt] - y*Nix;
+             y = y + display_height/3;
+             DrawTannenbaum( x, y );
+           }
       }
 
       /* Dear Santa */
